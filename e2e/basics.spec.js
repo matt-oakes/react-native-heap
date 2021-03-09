@@ -1,4 +1,5 @@
 require('coffeescript').register();
+
 _ = require('lodash');
 assert = require('should/as-function');
 

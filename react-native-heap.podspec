@@ -12,12 +12,11 @@ Pod::Spec.new do |s|
   s.homepage = package[:homepage]
   s.source = { git: package[:repository] }
   s.source_files = "ios/**/*.{h,m}"
-  s.platform = :ios, "8.0"
+  s.platform = :ios, "9.2"
   s.preserve_paths = "ios/Vendor"
   s.vendored_libraries = "ios/Vendor/libHeap.a"
 
   s.dependency "React"
-  
   s.frameworks = "SystemConfiguration"
 
   s.script_phase = {

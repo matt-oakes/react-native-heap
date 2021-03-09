@@ -1,0 +1,20 @@
+{
+  "configurations": {
+    "ios": {
+      "binaryPath": "./examples/TestDriver/ios/build/Build/Products/Debug-iphonesimulator/TestDriver.app",
+      "build": "xcodebuild -workspace ./examples/TestDriver/ios/TestDriver.xcworkspace -scheme TestDriver -configuration Debug",
+      "type": "ios.simulator",
+      "device": {
+        "type": "iPhone 12 Pro Max"
+      }
+    },
+    "android.emu.debug": {
+      "binaryPath": "./examples/TestDriver/android/app/build/outputs/apk/debug/app-debug.apk",
+      "build": "cd ./examples/TestDriver/android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd ../../../../heap",
+      "type": "android.emulator",
+      "name": "Nexus_5X_API_26"
+    }
+  },
+  "test-runner": "mocha",
+  "runnerConfig": "./e2e/.mocharc.json"
+}

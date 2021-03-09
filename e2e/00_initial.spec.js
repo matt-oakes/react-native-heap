@@ -1,6 +1,5 @@
-require('coffeescript').register();
+require('coffeescript/register');
 
-testUtil = require('../../heap/test/util');
 rnTestUtil = require('./rnTestUtilities');
 
 // This file is named funkily so that Mocha runs this first.  That way we

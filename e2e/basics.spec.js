@@ -4,7 +4,7 @@ _ = require('lodash');
 assert = require('should/as-function');
 
 nodeUtil = require('util');
-testUtil = require('../../heap/test/util');
+testUtil = require('../../../test/util');
 rnTestUtil = require('./rnTestUtilities');
 
 const BASICS_PAGE_TOP_HIERARCHY =
@@ -94,7 +94,7 @@ describe('Basic React Native and Interaction Support', () => {
             rnTestUtil.SDK_VERSION,
           ],
         },
-        event => {
+        (event) => {
           return !(
             _.includes(event.k, 'eventProp1') ||
             _.includes(event.k, 'eventProp2')
@@ -119,7 +119,7 @@ describe('Basic React Native and Interaction Support', () => {
             rnTestUtil.SDK_VERSION,
           ],
         },
-        event => {
+        (event) => {
           return (
             _.includes(event.k, 'eventProp1') &&
             _.includes(event.k, 'eventProp2')
@@ -144,7 +144,7 @@ describe('Basic React Native and Interaction Support', () => {
             rnTestUtil.SDK_VERSION,
           ],
         },
-        event => {
+        (event) => {
           return (
             !_.includes(event.k, 'eventProp1') &&
             _.includes(event.k, 'eventProp2')
@@ -169,7 +169,7 @@ describe('Basic React Native and Interaction Support', () => {
             rnTestUtil.SDK_VERSION,
           ],
         },
-        event => {
+        (event) => {
           return !(
             _.includes(event.k, 'eventProp1') ||
             _.includes(event.k, 'eventProp2')
@@ -179,7 +179,7 @@ describe('Basic React Native and Interaction Support', () => {
     });
 
     it('should add user properties', async () => {
-      const { err, res } = await new Promise(resolve => {
+      const { err, res } = await new Promise((resolve) => {
         testUtil.findAddUserPropertiesRequestsInRedis((err, res) => {
           resolve({ err, res });
         });
@@ -192,7 +192,7 @@ describe('Basic React Native and Interaction Support', () => {
     });
 
     it('should send identify', async () => {
-      const { err, res } = await new Promise(resolve => {
+      const { err, res } = await new Promise((resolve) => {
         testUtil.findIdentifyRequestsInRedis((err, res) => {
           resolve({ err, res });
         });
@@ -204,7 +204,7 @@ describe('Basic React Native and Interaction Support', () => {
     });
 
     it('should get user id', async () => {
-      const { err, res } = await new Promise(resolve => {
+      const { err, res } = await new Promise((resolve) => {
         // Fetch a post-resetIdentity event.
         testUtil.findEventInRedisRequests(
           { t: 'BASICS_SENTINEL' },
@@ -223,7 +223,7 @@ describe('Basic React Native and Interaction Support', () => {
     });
 
     it('should reset identity', async () => {
-      const { err1, err2, res1, res2 } = await new Promise(resolve => {
+      const { err1, err2, res1, res2 } = await new Promise((resolve) => {
         // Fetch a pre-resetIdentity event.
         testUtil.findEventInRedisRequests(
           { t: 'pressInTestEvent2' },
@@ -277,7 +277,7 @@ describe('Basic React Native and Interaction Support', () => {
             },
           },
         },
-        event => {
+        (event) => {
           return (
             !_.has(event.properties, 'eventProp1') &&
             !_.has(event.properties, 'eventProp2')
@@ -368,7 +368,7 @@ describe('Basic React Native and Interaction Support', () => {
             },
           },
         },
-        event => {
+        (event) => {
           return (
             _.has(event.properties, 'eventProp1') &&
             _.has(event.properties, 'eventProp2')
@@ -402,7 +402,7 @@ describe('Basic React Native and Interaction Support', () => {
             },
           },
         },
-        event => {
+        (event) => {
           return (
             !_.has(event.properties, 'eventProp1') &&
             _.has(event.properties, 'eventProp2')
@@ -436,7 +436,7 @@ describe('Basic React Native and Interaction Support', () => {
             },
           },
         },
-        event => {
+        (event) => {
           return (
             !_.has(event.properties, 'eventProp1') &&
             !_.has(event.properties, 'eventProp2')
@@ -446,7 +446,7 @@ describe('Basic React Native and Interaction Support', () => {
     });
 
     it('should add user properties', async () => {
-      const { err, res } = await new Promise(resolve => {
+      const { err, res } = await new Promise((resolve) => {
         testUtil.findAndroidAupInRedisRequests((err, res) => {
           resolve({ err, res });
         });
@@ -462,7 +462,7 @@ describe('Basic React Native and Interaction Support', () => {
     });
 
     it('should send identify', async () => {
-      const { err, res } = await new Promise(resolve => {
+      const { err, res } = await new Promise((resolve) => {
         testUtil.findAndroidIdentifyInRedisRequests((err, res) => {
           resolve({ err, res });
         });
@@ -474,7 +474,7 @@ describe('Basic React Native and Interaction Support', () => {
     });
 
     it('should get user id', async () => {
-      const { err, res } = await new Promise(resolve => {
+      const { err, res } = await new Promise((resolve) => {
         // Fetch a post-resetIdentity event.
         testUtil.findAndroidEventInRedisRequests(
           { event: { sourceCustomEvent: { name: 'BASICS_SENTINEL' } } },
@@ -495,7 +495,7 @@ describe('Basic React Native and Interaction Support', () => {
     });
 
     it('should reset identity', async () => {
-      const { err1, err2, res1, res2 } = await new Promise(resolve => {
+      const { err1, err2, res1, res2 } = await new Promise((resolve) => {
         // Fetch a pre-resetIdentity event.
         testUtil.findAndroidEventInRedisRequests(
           {
@@ -593,7 +593,7 @@ describe('Basic React Native and Interaction Support', () => {
         },
       };
 
-      const { err, res } = await new Promise(resolve => {
+      const { err, res } = await new Promise((resolve) => {
         testUtil.findAndroidEventInRedisRequests({ event }, (err, res) => {
           resolve({ err, res });
         });

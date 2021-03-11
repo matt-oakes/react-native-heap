@@ -1,12 +1,11 @@
 require('coffeescript').register();
 _ = require('lodash');
-assert = require('should/as-function');
 
-testUtil = require('../../heap/test/util');
+testUtil = require('../../../test/util');
 rnTestUtil = require('./rnTestUtilities');
 
 const delay = async () => {
-  await new Promise(resolve => setTimeout(resolve, 500));
+  await new Promise((resolve) => setTimeout(resolve, 500));
 };
 
 const doTestActions = async () => {

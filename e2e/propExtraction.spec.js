@@ -2,7 +2,7 @@ require('coffeescript').register();
 _ = require('lodash');
 assert = require('should/as-function');
 
-testUtil = require('../../heap/test/util');
+testUtil = require('../../../test/util');
 rnTestUtil = require('./rnTestUtilities');
 
 const IOS_BUTTON_SUFFIX = 'TouchableOpacity;';

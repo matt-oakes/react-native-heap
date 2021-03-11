@@ -1,16 +1,15 @@
-require('coffeescript/register')
+require('ts-node/register');
+require('coffeescript/register');
 
 const _ = require('lodash');
-assert = require('should/as-function');
 const nodeUtil = require('util');
 
-db = require('../../heap/back/db');
-testUtil = require('../../heap/test/util');
+db = require('../../../back/db');
+testUtil = require('../../../test/util');
 
 packageJson = require('../package.json');
 
 const SDK_VERSION = packageJson.version;
-assert.exist(SDK_VERSION);
 
 const HEAP_ENV_ID = '2084764307';
 
@@ -19,18 +18,18 @@ const waitIfIos = async () => {
     // :HACK: Break up long URL.
     // :TODO: Remove once pixel endpoint is handling larger events again.
     console.log('Waiting 15s to flush iOS events.');
-    await new Promise(resolve => setTimeout(resolve, 15000));
+    await new Promise((resolve) => setTimeout(resolve, 15000));
   }
 };
 
-const getPlatformBoolean = boolean => {
+const getPlatformBoolean = (boolean) => {
   if (device.getPlatform() === 'ios') {
     return boolean ? '1' : '0';
   }
   return boolean.toString();
 };
 
-const flushAllRedis = nodeUtil.promisify(done =>
+const flushAllRedis = nodeUtil.promisify((done) =>
   db.orm.connection.sharedRedis().flushall(done)
 );
 
@@ -87,7 +86,7 @@ const assertAndroidAutotrackHierarchy = async (expectedName, expectedProps) => {
       sourceEvent: {
         name: expectedName,
         sourceName: 'react_native',
-        sourceProperties: _.mapValues(expectedProps, value => {
+        sourceProperties: _.mapValues(expectedProps, (value) => {
           return { string: value };
         }),
       },
@@ -128,7 +127,7 @@ pollForSentinel = async (sentinelValue, timeout = 60000) => {
   const startTick = Date.now();
 
   // Give it a few seconds at first.
-  await new Promise(resolve => setTimeout(resolve, 3000));
+  await new Promise((resolve) => setTimeout(resolve, 3000));
 
   while (Date.now() - startTick <= timeout) {
     const eventName = `${sentinelValue.toUpperCase()}_SENTINEL`;
@@ -175,7 +174,7 @@ pollForSentinel = async (sentinelValue, timeout = 60000) => {
       throw new Error(`Unknown device type: ${device.getPlatform()}`);
     }
 
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 100));
   }
 
   throw new Error(`Timed out waiting for sentinel event ${sentinelValue}`);

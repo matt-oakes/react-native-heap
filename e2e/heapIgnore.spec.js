@@ -1,9 +1,10 @@
 require('coffeescript').register();
+
 _ = require('lodash');
 assert = require('should/as-function');
 
 nodeUtil = require('util');
-testUtil = require('../../heap/test/util');
+testUtil = require('../../../test/util');
 rnTestUtil = require('./rnTestUtilities');
 
 const HEAPIGNORE_PAGE_TOP_HIERARCHY =

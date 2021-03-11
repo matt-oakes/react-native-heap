@@ -22,12 +22,3 @@ target 'TestDriverRN063' do
     flipper_post_install(installer)
   end
 end
-
-target 'TestDriverRN063-tvOS' do
-  # Pods for TestDriverRN063-tvOS
-
-  target 'TestDriverRN063-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-end

@@ -1,0 +1,7 @@
+{
+  "recursive": true,
+  "timeout": 120000,
+  "bail": true,
+  "file": "../react-native-heap/e2e/init.js",
+  "require": ["ts-node/register", "should/as-function"]
+}

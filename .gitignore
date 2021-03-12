@@ -41,3 +41,4 @@ Pods/
 node_modules
 build
 dist
+*.tgz

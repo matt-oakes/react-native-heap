@@ -1,21 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Provider } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
+import { store } from './src/reduxElements';
+import TopNavigator from './src/topNavigator';
+import NavigationService from './src/navigatorService';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App to start on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+export default class App extends React.Component {
+  componentDidMount() {
+    setTimeout(() => {
+      console.log('Forcing update of react nav HOC via setState().');
+      this.setState({});
+    }, 3000);
+  }
+  render() {
+    return (
+      <Provider store={store}>
+        <TopNavigator
+          ref={NavigationService.setTopLevelNavigator}
+          // Check that manually instrumenting screen tracking doesn't break autocapture by passing in a no-op function as the
+          // 'onNavigationStateChange' handler.
+          onNavigationStateChange={() => {}}
+        />
+      </Provider>
+    );
+  }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

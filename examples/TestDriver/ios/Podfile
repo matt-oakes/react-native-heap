@@ -1,49 +1,55 @@
-# Uncomment the next line to define a global platform for your project
-source "https://github.com/CocoaPods/Specs.git"
+require_relative '../node_modules/react-native/scripts/react_native_pods'
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, "9.0"
-use_frameworks!
+platform :ios, '11.0'
 
-target "TestDriver" do
-  rn_path = "../node_modules/react-native"
+target 'TestDriver' do
+  config = use_native_modules!
 
-  # See http://facebook.github.io/react-native/docs/integration-with-existing-apps.html#configuring-cocoapods-dependencies
-  pod "yoga", path: "#{rn_path}/ReactCommon/yoga/yoga.podspec"
-  pod "React", path: rn_path, subspecs: [
-    "Core",
-    "CxxBridge",
-    "DevSupport",
-    "RCTActionSheet",
-    "RCTAnimation",
-    "RCTGeolocation",
-    "RCTImage",
-    "RCTLinkingIOS",
-    "RCTNetwork",
-    "RCTSettings",
-    "RCTText",
-    "RCTVibration",
-    "RCTWebSocket",
-  ]
-
-  # React Native third party dependencies podspecs
-  pod "DoubleConversion", :podspec => "#{rn_path}/third-party-podspecs/DoubleConversion.podspec"
-  pod "glog", :podspec => "#{rn_path}/third-party-podspecs/glog.podspec"
-  pod "Folly", :podspec => "#{rn_path}/third-party-podspecs/Folly.podspec"
+  use_react_native!(
+    :path => config[:reactNativePath],
+    # to enable hermes on iOS, change `false` to `true` and then install pods
+    :hermes_enabled => false
+  )
 
   pod "react-native-heap", path: "../node_modules/@heap/react-native-heap"
 
-  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+  target 'TestDriverTests' do
+    inherit! :complete
+    # Pods for testing
+  end
 
-  target "TestDriverTests" do
-    inherit! :search_paths
+  # Enables Flipper.
+  #
+  # Note that if you have use_frameworks! enabled, Flipper will not work and
+  # you should disable the next line.
+  use_flipper!()
+
+  post_install do |installer|
+    flipper_post_install(installer)
+    react_native_post_install(installer)
+
+    installer.pods_project.targets.each do |target|
+      if target.name == 'React-Core-AccessibilityResources'
+        target.remove_from_project
+      else
+        target.build_configurations.each do |config|
+          config.build_settings['GCC_WARN_INHIBIT_ALL_WARNINGS'] = 'YES'
+          config.build_settings.delete('IPHONEOS_DEPLOYMENT_TARGET')
+          config.build_settings.delete('TARGETED_DEVICE_FAMILY')
+          config.build_settings.delete('SWIFT_VERSION')
+          config.build_settings.delete('ARCHS')
+        end
+      end
+    end
   end
 end
 
 # Force react-native-heap to be built as a static framework.
 # Based on comments at https://github.com/CocoaPods/CocoaPods/issues/7428 .
 pre_install do |installer|
-    pod = installer.pod_targets.find { |p| p.name == 'react-native-heap'}
-    def pod.static_framework?
-        true
-    end
+  pod = installer.pod_targets.find { |p| p.name == 'react-native-heap'}
+  def pod.static_framework?
+    true
+  end
 end

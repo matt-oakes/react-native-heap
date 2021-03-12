@@ -1,0 +1,12 @@
+{
+  "name": "TestDriverRN064RC",
+  "displayName": "TestDriverRN064RC",
+  "expo": {
+    "name": "TestDriverRN064RC",
+    "slug": "TestDriverRN064RC",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}

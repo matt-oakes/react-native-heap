@@ -1,4 +1,5 @@
 #import "AppDelegate.h"
+#import "Heap.h"
 
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
@@ -39,12 +40,26 @@ static void InitializeFlipper(UIApplication *application) {
 
 @implementation AppDelegate
 
++ (void)load {
+  // Send events to local collector.
+  SEL setRootUrlSelector = @selector(setRootUrl:);
+  if ([[Heap class] respondsToSelector:setRootUrlSelector]) {
+    [[Heap class] performSelector:setRootUrlSelector withObject:@"http://localhost:3000"];
+  }
+
+  // Set timer interval shorter so tests complete in a reasonable amount of time!
+  SEL changeIntervalSelector = @selector(changeInterval:);
+  if ([[Heap class] respondsToSelector:changeIntervalSelector]) {
+    [[Heap class] performSelector:changeIntervalSelector withObject:@1.0];
+  }
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 #if defined(FB_SONARKIT_ENABLED) && __has_include(<FlipperKit/FlipperClient.h>)
   InitializeFlipper(application);
 #endif
-  
+
   self.moduleRegistryAdapter = [[UMModuleRegistryAdapter alloc] initWithModuleRegistryProvider:[[UMModuleRegistryProvider alloc] init]];
   self.launchOptions = launchOptions;
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];

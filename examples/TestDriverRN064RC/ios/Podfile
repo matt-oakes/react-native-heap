@@ -10,6 +10,8 @@ target 'TestDriverRN064RC' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+  pod "react-native-heap", path: "../node_modules/@heap/react-native-heap"
+
   # Uncomment the code below to enable Flipper.
   #
   # You should not install Flipper in CI environments when creating release

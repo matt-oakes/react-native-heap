@@ -1,0 +1,13 @@
+diff --git a/examples/TestDriver/React.podspec b/examples/TestDriver/React.podspec
+index 946d461..162ca1f 100644
+--- a/examples/TestDriver/React.podspec
++++ b/examples/TestDriver/React.podspec
+@@ -127,6 +127,8 @@ Pod::Spec.new do |s|
+     ss.dependency             "React/jsinspector"
+     ss.dependency             "boost-for-react-native", "1.63.0"
+     ss.dependency             "Folly", folly_version
++    ss.dependency             "DoubleConversion"
++    ss.dependency             "glog"
+     ss.compiler_flags       = folly_compiler_flags
+     ss.source_files         = "ReactCommon/cxxreact/*.{cpp,h}"
+     ss.exclude_files        = "ReactCommon/cxxreact/SampleCxxModule.*"

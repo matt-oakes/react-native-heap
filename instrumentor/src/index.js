@@ -1,7 +1,7 @@
 // :TODO: (jmtaber129): Add file-level comment explaining what this plugin does and how it works.
 
-const t = require('babel-types');
-const template = require('babel-template');
+const t = require('@babel/types');
+const template = require('@babel/template').default;
 
 // Used to record whether certain methods/components have been instrumented.
 // :TODO: (jmtaber129): Determine whether we actually need this once we figure out the unexpected
@@ -27,7 +27,11 @@ const buildHeapImport = template(`(
 )`);
 
 const buildInstrumentationHoc = template(`
-  const Heap = HEAP_IMPORT;
+  const Heap = (
+    require('@heap/react-native-heap').default || {
+      HOC_IDENTIFIER: (Component) => Component,
+    }
+  );
 
   const COMPONENT_ID = HOC_CALL_EXPRESSION;
 `);
@@ -335,13 +339,9 @@ const instrumentTouchableHoc = path => {
     [equivalentExpression]
   );
 
-  const heapImport = buildHeapImport({
-    HOC_IDENTIFIER: hocIdentifier,
-  });
-
   const replacement = buildInstrumentationHoc({
     COMPONENT_ID: path.node.id,
-    HEAP_IMPORT: heapImport,
+    HOC_IDENTIFIER: hocIdentifier,
     HOC_CALL_EXPRESSION: autotrackExpression,
   });
 
@@ -366,13 +366,9 @@ const instrumentTextInputHoc = path => {
     [equivalentExpression]
   );
 
-  const heapImport = buildHeapImport({
-    HOC_IDENTIFIER: hocIdentifier,
-  });
-
   const replacement = buildInstrumentationHoc({
     COMPONENT_ID: path.node.id,
-    HEAP_IMPORT: heapImport,
+    HOC_IDENTIFIER: hocIdentifier,
     HOC_CALL_EXPRESSION: autotrackExpression,
   });
 

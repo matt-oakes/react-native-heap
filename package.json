@@ -27,11 +27,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@babel/core": "^7.2.2",
+    "@babel/core": "^7.14.2",
+    "@babel/template": "^7.12.13",
+    "@babel/types": "^7.14.2",
     "@types/react-reconciler": "^0.18.0",
-    "babel-plugin-add-react-displayname": "0.0.5",
-    "babel-template": "^6.26.0",
-    "babel-types": "^6.26.0",
     "flat": "^4.1.0",
     "hoist-non-react-statics": "^3.3.2"
   },
